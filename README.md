@@ -18,9 +18,9 @@ The first step is to build an emulator (a surrogate model) using the numerical e
 1. Go to the folder "Surrogate Model"
 2. Use the function `mvEmulator` with the following inputs:
 
+* **emulTrainData**: 	Data filename string - CSV with header
 * **p**: 		number of input parameters
 * **q**:		number of output parameters
-* **emulTrainData**: 	Data filename string - CSV with header
 * **MCMC**: 	number of iterations for MCMC
 * **k**: 		parameter for k-fold cross validation, (Number of data points set aside for validation) 
 
@@ -44,12 +44,12 @@ The second step is to calibrate the emulator that was built in the previous step
 1. Go to the folder "Calibration"
 2. Use the function `mvCalibrator` with the following outputs:
 
-* **p**: 		number of input parameters
-* **q**:		number of output parameters
-* **kappa**:             number of control variables
 * **r_hat**:     Vector of size `(p+kappa)x1` which is the estimate of the surrogate model paramaters
 *  **emulTrainData**: 	Data filename string - CSV with header
 *  **calibTrainData**:     physical experiments data filename string - CSV with header
+* **p**: 		number of input parameters
+* **q**:		number of output parameters
+* **kappa**:             number of control variables
 * **MCMC**: 	number of iterations for MCMC
 * **k**: 		parameter for k-fold cross validation, (Number of data points set aside for validation)
 
