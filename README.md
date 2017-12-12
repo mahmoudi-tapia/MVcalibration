@@ -9,8 +9,8 @@ This repository consists of codes and data files for the purpose of emulation (s
 - Number of calibration paramters: `t`
 - Number of outputs: `q`
 
-The user can use the repository for building and validatin a surrogate model from her own data. This task is explained in **Step 1**.
-In addition, the user can provide experimental data to calibrate the parameters of her model. This task is explained in **Step 2**.
+The user can use the repository for building and validation a surrogate model from her own data. This task is explained in **Step 1**.
+In addition, the user can provide experimental data to calibrate her model parameters. This task is explained in **Step 2**.
 
 ### The data
 
