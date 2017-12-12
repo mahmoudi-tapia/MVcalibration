@@ -1,10 +1,10 @@
-# Multivariate statistical calibration of computer simulation models
+# Multivariate statistical calibration of computer models
 
 Please read the following procedure before using the MATLAB codes in this repository.
 
 ### The data
 
-There are only two spreadsheets used throughout for this project:
+There are two spreadsheets used throughout for this project:
 
 1. surrogate_model_data.csv
 2. calibration_data.csv
