@@ -9,7 +9,8 @@ There are two spreadsheets used throughout for this project:
 1. surrogate_model_data.csv
 2. calibration_data.csv
 
-(https://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surr_data_scr.JPG)
+
+![screenshot of the data csv](https://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surr_data_scr.JPG)
 
 The first spreadsheet containts the numerical experiments data, i.e. the inputs and outputs from the simulation model. The second spreadsheet contains the physical experiments data. The CSV format with header is used for both.
 
