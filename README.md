@@ -44,7 +44,7 @@ The first step is to build an emulator (a surrogate model) using the numerical e
 
 A screenshot of the example numerical data used is shown below:
 
-![screenshot of the data csv](http://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surrogate_model_data_scr.JPG)
+![screenshot of the data csv](https://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surrogate_model_data_scr.JPG)
 
 A sample function recall for a model with 2 control inputs, 3 calibration parameters, and 3 outputs will look like:
 
