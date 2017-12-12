@@ -2,35 +2,54 @@
 
 Please read the following procedure before using the MATLAB codes in this repository.
 
+## Introduction
+This repository consists of codes and data files for the purpose of emulation (surrogate modeling) and statistical calibration of computer models using Gaussian processes. The data used here as an example come from an FEM thermal model developed for metal-based additive manufacturing. The emulation and calibration are performed for a multivariate model with the following properties:
+
+- Number of control inputs: `p`
+- Number of calibration paramters: `kappa`
+- Number of outputs: `q`
+
+The user can use the repository for building and validatin a surrogate model from her own data. This task is explained in **Step 1**.
+In addition, the user can provide experimental data to calibrate the parameters of her model. This task is explained in **Step 2**.
+
 ### The data
 
-There are two spreadsheets used throughout for this project:
+We use a number of CSV spreadsheets throughout this project, as listed in the following table. Note that the the spreadsheets are assumed to have header in all cases.
 
-1. surrogate_model_data.csv
-2. calibration_data.csv
+Spreadsheet | Example used in the repository
+------------ | -------------
+Numerical experiments data, i.e. the inputs, parameters, and outputs from the computer simulation model | `surrogate_model_data.csv`
+Inputs for the purpose of prediction using the emulator without calibration of parameters | `surr_pred_data.csv`
+Physical experiments data, i.e. the inputs (without parameters) and outputs from experimentation | `calibration_data.csv`
+Inputs for the purpose of prediction using the emulator after calibration is done| `calib_pred_data.csv`
 
 
-![screenshot of the data csv](https://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surr_data_scr.JPG)
 
-The first spreadsheet containts the numerical experiments data, i.e. the inputs and outputs from the simulation model. The second spreadsheet contains the physical experiments data. The CSV format with header is used for both.
 
-### Step 1: Emulation (Surrogate modeling)
+
+
+## Step 1: Emulation (Surrogate modeling)
 
 The first step is to build an emulator (a surrogate model) using the numerical experiments data. Use the following procedure:
 
 1. Go to the folder "Surrogate Model"
-2. Use the function `mvEmulator` with the following inputs:
+2. Use the function `buildEmulator` with the following inputs:
 
-* **emulTrainData**: 	Data filename string - CSV with header
-* **p**: 		number of input parameters
+* **emulTrainData**: 	Data filename string for a spreadsheet with `N` rows and `(p+kappa)` columns
+* **p+kappa**: 		Summation of control inputs and calibration parameters
 * **q**:		number of output parameters
 * **MCMC**: 	number of iterations for MCMC
 * **k**: 		parameter for k-fold cross validation, (Number of data points set aside for validation) 
 
-A sample function recall will look like:
+
+A screenshot of the example numerical data used is shown below:
+
+![screenshot of the data csv](http://github.com/mahmoudi-tapia/MVcalibration/blob/master/SurrogateModel/surrogate_model_data_scr.JPG)
+
+A sample function recall for a model with 2 control inputs, 3 calibration parameters, and 3 outputs will look like:
 
 ```javascript
-[ mvEmulRes ] = mvEmulator ( 'surrogate_model_data.csv', 5, 3, 500, 13);
+[ mvEmulRes ] = buildEmulator ( 'surrogate_model_data.csv', 5, 3, 5000, 13);
 ```
 The output **mvEmulRes** will be a struct with the following elements:
 
@@ -38,19 +57,39 @@ The output **mvEmulRes** will be a struct with the following elements:
 * **rSample**: 		Posterior distribution for the roughness parameters for the surrogate model
 * **rMode**:		Mode of the posterior distribution for the roughness parameters for the surrogate model
 
-The output of the emulation step can then be used for the calibration described in Step 2.
+### Prediction without calibrated parameters
+Once the emulator is ready, it can be used predictions either without or with the calibrated parameters. A specific function `emulPred` is written for when the user wants to predict using the emulator without the calibrated parameters. In this case, user should specify her desired control inputs in addition to the parameters in a separate spreadsheet. Use the function `emulPred` with the following inputs:
 
-### Step 2: Calibration
+* **emulTrainData**: 	Data filename string for a spreadsheet with `N` rows and `(p+kappa)` columns
+* **p+kappa**: 		Summation of control inputs and calibration parameters
+* **q**:		number of output parameters
+* **r_hat**:     Vector of size `(p+kappa)x1` which is the estimate of the surrogate model paramaters
+* **predData**: Data filename string of the inputs for the purpose of prediction using the emulator without calibration of parameters
+
+A sample function recall for a model with 2 control inputs, 3 calibration parameters, and 3 outputs will look like:
+
+```javascript
+[ mvEmulRes ] = emulPred( 'surrogate_model_data.csv', 5, 3, mvEmulRes.rMode , 'surr_pred_data.csv');
+```
+
+The output **emulPred** will be a struct with the following elements:
+
+* **EmulPred**: 	Predictions for the input using the surrogate model
+* **PredSD**: 		Standard error of the predictions
+
+The output of the emulation step can also be used for calibration of parameters as described in **Step 2**.
+
+## Step 2: Calibration
 
 The second step is to calibrate the emulator that was built in the previous step. Note that the output of the previous step is need; particularly, a vector of the estiamte of the roughness parameters is needed. By default, we use the posterior mode as the estimates `r_hat`. To accomplish the multivariate calibration, use the following procedure:
 
 1. Go to the folder "Calibration"
-2. Use the function `mvCalibrator` with the following outputs:
+2. Use the function `mvCalibrator` with the following inputs:
 
 * **r_hat**:     Vector of size `(p+kappa)x1` which is the estimate of the surrogate model paramaters
-*  **emulTrainData**: 	Data filename string - CSV with header
-*  **calibTrainData**:     physical experiments data filename string - CSV with header
-* **p**: 		number of input parameters
+*  **emulTrainData**: 	Data filename string for a spreadsheet with `N` rows and `(p+kappa)` columns
+*  **calibTrainData**:   Data filename string for a spreadsheet with `M` rows and `p` columns
+* **p+kappa**: 		Summation of control inputs and calibration parameters
 * **q**:		number of output parameters
 * **kappa**:             number of control variables
 * **MCMC**: 	number of iterations for MCMC
