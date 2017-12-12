@@ -124,6 +124,16 @@ Once the paramaters are calibrated and estimates for the model discrepency and n
 * **psiEpsHAT**:		Estimate of the noise variance
 * **predDataCSV**:       data filename string, Inputs for the purpose of prediction using the emulator after calibrating parameters (a spreadsheet with `S` rows and `p` columns)
 
+A sample function recall for a model with 2 control inputs, 3 calibration parameters, and 3 outputs will look like:
+
+```javascript
+[ mvCalibPred ] = calibPred( r_hat, 'surrogate_model_data.csv', 'calibration_data.csv', 5, 3, 2, mvCalibRes.thetaMode , mvCalibRes.rDeltaHAT, mvCalibRes.psiDeltaHAT, mvCalibRes.psiEpsHAT, 'calib_pred_data.csv');
+```
+
+The output **mvCalibPred** will be a struct with the following elements:
+
+* **CalibPred**: 	Predictions for the input using the calibrated surrogate model
+* **PredSD**: 		Standard error of the predictions
 
 ## Remarks
 
