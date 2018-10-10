@@ -141,7 +141,7 @@ The output **mvCalibPred** will be a struct with the following elements:
 
 2. After the cross-validation for each step, another final training is performed with the full data i.e. no data points left out for any validation. The workspace of this final run is also saved in the folder 'CodeOutput' for future reference.
 
-3. In case of issues/questions, please do not hesitate to contact the developers at mahmoudi@tamu.edu. 
+3. In case of issues/questions, please do not hesitate to contact **Mo Mahmoudi** at mahmoudi@tamu.edu. 
 
  
 Good luck! :+1:
