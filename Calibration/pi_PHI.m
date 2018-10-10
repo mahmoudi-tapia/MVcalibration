@@ -29,8 +29,8 @@ p = kappa + length(theta);
 % ----------   P1
 % ----------------------------
 % PARAMETERS for theta
-LB=zeros(3,1);    % lower bound for each calib. parameter
-UB=ones(3,1);    % upper bound for each calib. parameter
+LB=zeros(p-kappa,1);    % lower bound for each calib. parameter
+UB=ones(p-kappa,1);    % upper bound for each calib. parameter
 
 P1=zeros(p-kappa,1);  % define a vector for each probability
 for i=1:p-kappa
