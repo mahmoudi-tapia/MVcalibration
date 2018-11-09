@@ -497,7 +497,7 @@ THETA = bsxfun(@times,THETA,maxVal-minVal)+minVal;
 
 % Mean, mode, and std. dev
 % thetaMEAN = mean(THETA)';
-thetaMODE = zeros(q,1);
+thetaMODE = zeros(P-t,1);
 % thetaSD = std(THETA)';
 
 % bin = [20,20,40];
