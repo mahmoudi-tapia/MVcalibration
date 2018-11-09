@@ -523,7 +523,7 @@ set(gcf,'units','points','position',[x0,y0,width,height])
 %----------------
 % SUBPLOT
 %----------------
-for i=1:q
+for i=1:P-t
   
 
     
